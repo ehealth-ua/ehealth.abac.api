@@ -1,4 +1,4 @@
-defmodule Rules.Features.MedicalEventsTest do
+defmodule Rules.Features.ReferralsContextTest do
   @moduledoc false
 
   use ExUnit.Case, async: true
@@ -8,13 +8,13 @@ defmodule Rules.Features.MedicalEventsTest do
   alias WhiteBread.Runners.Setup
   alias WhiteBread.Tags.FeatureFilterer
 
-  @context Rules.Contexts.MedicalEventsContext
+  @context Rules.Contexts.ReferralsContext
 
   setup do
     features =
       Application.app_dir(:rules, "priv/features")
       |> Parser.parse_features()
-      |> FeatureFilterer.get_for_tags([:medical_events])
+      |> FeatureFilterer.get_for_tags([:referrals])
 
     [feature: hd(features)]
   end

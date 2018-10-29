@@ -1,4 +1,4 @@
-defmodule Rules.Contexts.MedicalEventsContext do
+defmodule Rules.Contexts.ReferralsContext do
   @moduledoc false
 
   use WhiteBread.Context
@@ -6,11 +6,6 @@ defmodule Rules.Contexts.MedicalEventsContext do
   # scenario_finalize(fn {:ok, scenario}, state ->
   #   DecisionManager.decide(state)
   # end)
-
-  @doc "Verify doctor has active declaration with patient"
-  given_("Active declaration with patient", fn state ->
-    {:ok, state}
-  end)
 
   @doc "Verify MSP matches or differs from MSP from request"
   given_(~r/^MSP (?<is_equal>(=|!=)) MSP from request$/, fn
@@ -30,17 +25,6 @@ defmodule Rules.Contexts.MedicalEventsContext do
       {:ok, state}
 
     # care level should not be equal to care level from request
-    state, %{is_equal: "!="} ->
-      {:ok, state}
-  end)
-
-  @doc "Verify referral MSP matches or differs MSP from request"
-  given_(~r/^referral MSP (?<is_equal>(=|!=)) MSP from request$/, fn
-    # referral MSP should be equal to MSP from request
-    state, %{is_equal: "="} ->
-      {:ok, state}
-
-    # referral MSP should not be equal to MSP from request
     state, %{is_equal: "!="} ->
       {:ok, state}
   end)
