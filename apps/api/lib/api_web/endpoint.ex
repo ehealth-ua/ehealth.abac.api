@@ -2,10 +2,14 @@ defmodule ApiWeb.Endpoint do
   use Phoenix.Endpoint, otp_app: :api
 
   plug(Plug.Logger)
+  plug(Plug.RequestId)
+  plug(EView.Plugs.Idempotency)
+  plug(EView)
 
-  plug(Plug.Parsers,
-    parsers: [:urlencoded, :multipart, :json],
-    pass: ["*/*"],
+  plug(
+    Plug.Parsers,
+    parsers: [:json],
+    pass: ["application/json"],
     json_decoder: Jason
   )
 

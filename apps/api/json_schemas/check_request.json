@@ -1,0 +1,76 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "definitions": {
+    "consumer": {
+      "type": "object",
+      "properties": {
+        "user_id": {
+          "type": "string"
+        },
+        "client_id": {
+          "type": "string"
+        },
+        "client_type": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "user_id",
+        "client_id",
+        "client_type"
+      ],
+      "additionalProperties": false
+    },
+    "resource": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "id"
+      ]
+    }
+  },
+  "type": "object",
+  "properties": {
+    "consumer": {
+      "$ref": "#/definitions/consumer"
+    },
+    "action": {
+      "type": "string",
+      "enum": [
+        "create",
+        "read",
+        "update",
+        "action"
+      ]
+    },
+    "resource": {
+      "type": "object",
+      "properties": {
+        "context": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/resource"
+          }
+        },
+        "resource": {
+          "$ref": "#/definitions/resource"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "consumer",
+    "action",
+    "resource"
+  ],
+  "additionalProperties": false
+}

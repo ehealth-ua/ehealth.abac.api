@@ -11,6 +11,7 @@ defmodule Rules.MixProject do
       lockfile: "../../mix.lock",
       elixir: "~> 1.7",
       start_permanent: Mix.env() == :prod,
+      elixirc_paths: elixirc_paths(Mix.env()),
       deps: deps()
     ]
   end
@@ -23,10 +24,19 @@ defmodule Rules.MixProject do
     ]
   end
 
+  defp elixirc_paths(:test), do: ["lib", "test/support"]
+  defp elixirc_paths(_), do: ["lib"]
+
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:white_bread, "~> 4.3"}
+      {:redix, "~> 0.8.2"},
+      {:confex, "~> 3.3"},
+      {:mox, "~> 0.4.0"},
+      {:grpc, "~> 0.3.0-alpha.2"},
+      {:kazan, "~> 0.10.0"},
+      {:white_bread, "~> 4.3"},
+      {:uuid, "~> 1.1"}
     ]
   end
 end

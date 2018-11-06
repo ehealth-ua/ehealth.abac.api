@@ -4,13 +4,46 @@ defmodule Rules.Application do
   @moduledoc false
 
   use Application
+  alias Rules.Redis
 
   def start(_type, _args) do
-    # List all child processes to be supervised
-    children = [
-      # Starts a worker by calling: Rules.Worker.start_link(arg)
-      {Rules.Parser, [Application.app_dir(:rules, "priv/features")]}
-    ]
+    redix_config = Redis.config()
+
+    redix_workers =
+      for i <- 0..(redix_config[:pool_size] - 1) do
+        %{
+          id: {Redix, i},
+          start:
+            {Redix, :start_link,
+             [
+               [
+                 host: redix_config[:host],
+                 port: redix_config[:port],
+                 password: redix_config[:password],
+                 database: redix_config[:database],
+                 name: :"redix_#{i}"
+               ]
+             ]}
+        }
+      end
+
+    grpc_workers =
+      if Application.fetch_env(:rules, :env) == :prod do
+        [
+          {Rules.Grpc.Channels, []},
+          {Rules.Grpc.Watcher, []}
+        ]
+      else
+        []
+      end
+
+    children =
+      redix_workers ++
+        grpc_workers ++
+        [
+          {Rules.Grpc.Worker, []},
+          {Rules.Parser, [Application.app_dir(:rules, "priv/features")]}
+        ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
     # for other strategies and supported options

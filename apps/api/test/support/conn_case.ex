@@ -20,6 +20,7 @@ defmodule ApiWeb.ConnCase do
       # Import conveniences for testing with connections
       use Phoenix.ConnTest
       import ApiWeb.Router.Helpers
+      import Mox
 
       # The default endpoint for testing
       @endpoint ApiWeb.Endpoint

@@ -4,7 +4,7 @@ defmodule Api.Mixfile do
   def project do
     [
       app: :api,
-      version: "0.0.1",
+      version: "0.1.0",
       build_path: "../../_build",
       config_path: "../../config/config.exs",
       deps_path: "../../deps",
@@ -37,6 +37,8 @@ defmodule Api.Mixfile do
   defp deps do
     [
       {:rules, in_umbrella: true},
+      {:eview, "~> 0.14.0"},
+      {:jvalid, "~> 0.7.0"},
       {:phoenix, "~> 1.4.0-rc.2"},
       {:eview, "~> 0.14.0"},
       {:jason, "~> 1.1"},
