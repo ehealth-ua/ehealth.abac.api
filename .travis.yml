@@ -16,6 +16,11 @@ elixir:
   - 1.7.4
 otp_release:
   - 21.0.6
+notifications:
+  slack:
+    rooms:
+      - secure: "sLWOTNQfJHEATOoMKO9nd01AgOtd+eShyAhVikqssCGqazYreFi5sd4dGR5Q+tEeY5AAy4p7dEqB8wruoTwFyfkgHKYrc4tf7/1Uxf092thVnjDBj2+nLaOox/iqPvlpUWsPV30VBd0rrlZiyMh7EUBtINCbV026zPn9umTUQBZ297oYYAyuGq5IXKwnWVd4uixS62OXNnkUF5jijUDzcdXUrUN2fDzJmI7F26lvdiWj/EOoTwo4PwZqq+4CDi0VS1sgfguIlBayyDueiltFURdFhvrA7WRupVeypyCqra+1oDPH+DIeAJtN9nif57wsbGimxUmdevK/yvUi7b+BhDQUX0+fkeQ20EWMzI+2uv0It6jMumYybwRpL3AT2+FB5bbW9MEEU8gQ7/E8Ci/m2ABA4oUfXVvX3wyIANSafgOZ/ANZXoCtGSiSLJ4QQrtCeqG+sIJVT4y6hHrUlrDhZuOUdf6b0MNbYUqgiV7zYCk8JNx3cn+KDwisvwmrBaLi0mYs7ZkZGBZVGM6qH87ip7/JgSoVspR9dz2KmruCnitcaIsU67abH9Ns406LH2vqGWggIWenetBXnLrVOiDElq8y2miFwlphw2qe4uuFiyZXfTRaPdMPe20/VN5Wlr4dw08ln5BzhKpO9RZINh3eGUdrffxj/8cLcH8dpkUY+GI="
+    on_success: always
 env:
   global:
     - NO_ECTO_SETUP=true
