@@ -36,6 +36,7 @@ defmodule Rules.MixProject do
       {:grpc, "~> 0.3.0-alpha.2"},
       {:kazan, "~> 0.10.0"},
       {:white_bread, "~> 4.3"},
+      {:gherkin, "~> 1.6"},
       {:uuid, "~> 1.1"}
     ]
   end

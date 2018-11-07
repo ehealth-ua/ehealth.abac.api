@@ -1,4 +1,6 @@
 defmodule Api.Mixfile do
+  @moduledoc false
+
   use Mix.Project
 
   def project do
@@ -42,7 +44,8 @@ defmodule Api.Mixfile do
       {:phoenix, "~> 1.4.0-rc.2"},
       {:eview, "~> 0.14.0"},
       {:jason, "~> 1.1"},
-      {:cowboy, "~> 2.5"}
+      {:cowboy, "~> 2.5"},
+      {:plug_cowboy, "~> 2.0"}
     ]
   end
 end
