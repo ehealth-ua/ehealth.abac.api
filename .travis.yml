@@ -22,13 +22,14 @@ env:
     - MIX_ENV=test
     - DOCKER_NAMESPACE=edenlabllc
     - APPS='[{"app":"abac_api","chart":"abac-api","namespace":"abac","deployment":"api","label":"api"}]'
-    - secure: "oy7oz2mbGMI+PmkOCk2a1WlGsru54WWZ6qaRgvgmf+y4iRiWPjttUpuonExUd1NdLsbu/+/ccBsiwHp36w3gj6oTROCoR37lWdV5D1s3auSDtbBjIAwCi9GMHujmORjJLi4OGKjtmHyN6EBBErQDCCxy+p+w8NVedvs6mC+YYu2+K5fWxETFKPAUsHh46wSzHoci+4g+ViwDRrIj/dQ2NnqwO7rrGIJiJz4lzrcAfP2gelp0O9Ao1TKiod6UL/ek25FQMGTNfzzXcDPxbIE+KPWqmaOX4DgliKlBMAlB7NIuGSlFv6v9an6iDErpUkEQs2l8gJncmbp50brYgFMa9WbeUQTCEbWPn9FkQ8zYtFq44jJfYq7Mj2z61CwDr2PK84HhapmqPoBPwpB8eq9qLsngV6eb1IalRQQ1ikJVOgBJMkgVvB2EyVTq5sbmA0r64QMRe7dsVnQLs3EKEubHwc/OAZhAYPQyaqCoijP2HzKkrLiBg8WEzc8fgOeJKbDlCo8g0h1TI1qXZ2HcnTHq2lL5brQfDmEKJdjRjSIRe0fuvqGeseg2H0T9F8GTGLsp54CCdveYdXMVAbph5/jLRrIHicHXva517abObj+FepLxJETs1+a0hXScWdu0zaoC3romgOdT2Uw2GJpUlJ9r5YWv92ktXfkYfn224v4S6do="
+    - secure: "QSO4GUA8+/gBGcBb/kOHhwHfmvYoljqz8ZuP+E1gm2qrOic2rViTSoXhMgk1GOpEDLBUPzDk+k+dhUiEl13D7dVZo9FM+cQj6GylPQ9d2YWRpU7DmMcR6JlG2m1cgv1xHZUgbSFlg1w4BWKGIS/qv+bsXhCH+zkk1PYstWxptIwJqGAlEPZK8wCIJ4TaZ5RGpcnx8EufkmJaJjo2kuOmspzfzx7EbsK16bAmpey2jK7L2OZyW3FFmp9LH2sYC+jkbifETtMLkzL+kAeCLOb8SZX4jDXC+S3LT+w/qxYqggi3sox6TDK20QizUtuEDPYCY78qxLWzjIJLa2pKSzAId9U9Jndno7AbLVpYUzKeRK2UzcvjqbDFMPme9hSkQrMtj5GZTkIIW1y/a2QFsSjF5amKHNwgVOKjC6Zhrp+eHaTeK4Rc0T+EsGALzDkTKXj7cMPAtZ/cL4GVZCjIjPErW4DzAO0xVHd2Bwe2KVewJO6J1iaKxb/zOjMeYrXnjy+GbD9J2FLuBm7tA+kndxdUQn/NEkw2PPG7xSjOsX0p8LvzNpmNX9nRd7d/CBOMM9rOw4p/pEgdwnYHIUXSvyGivEOniUptPLFhRiJU1hM5BOnNvUH4cEDBJZ4rXIOOqfsngiEh71UZUwrlGsfAMhdkziL3VDHDibiQNAMLMMrpvDg="
     - secure: "nIXxC5zRbHpd2U6/rRU+t1qwrzhArWZZGb1SJOJ1XuKLZimxQh/J9AC8E1zSDdTNgH23GQZVOestBdNtBdKzAi9M2NKHj7CgnPummET91scbkbpgmO2pPkkSZMh082+jmMDoQOecB6U4t876VH0bjKEOksiqn17tW187PkHZR7BAiA2VLuL7aRiE4cp9gY4+V1u8e5NV+X7cuAvcVQ6IsJYyNbBjbTIWVn9weJA60u2T9n89HUGnoXGDbo6QmXkKq8KF3J1KynbNtOo9ALYezM+oconzQpdEdYAHmA4apNMqI6B0rzkLT/z+v42O8tz9WDfGHLkyQJQ2PKXksyj6gmCnHHKJHDsSqrhK1atuUraWGp+Ex8bxErpu+zAQHM6WpjavIny18cd2whDppRFoSvMJldoMgswZQ85PssuZLTIv0m2OTVQ0qWBw9ax0EmUugc3XhR4wuLprg5GGmzBjwBR2/AS6EjAwFehdRnBTGjE+GvUSZw5nKN9jxEIitRbgd+AeUANJtYI3tJJt5iJDkpuKYpNaN4UsnSLpeNyTtHj/x2HC6dFqeVOU6XI4Gb9q+NnKLceZmgld1Aop/UJW0Ec7vIqdrS0AuMM+lvOTNQk1no94CAp1Hb4psIXswEsURUlz0+9gWjBKEy+tTrVmej7jcnhqZYS4kN9m87DrTBs="
 branches:
   except:
     - /[0-9]*\.[0-9]*\.[0-9]*/
 before_install:
   - sudo apt-get install jq
+  - curl -s https://raw.githubusercontent.com/edenlabllc/ci-utils/umbrella_v2/init-redis.sh -o init-redis.sh; sudo sh ./init-redis.sh
   - curl -s https://raw.githubusercontent.com/edenlabllc/ci-utils/umbrella_v2/init-redis.sh -o init-redis.sh; sudo sh ./init-redis.sh
 
 jobs:
