@@ -104,7 +104,9 @@ defmodule Rules.Grpc.Channels do
   end
 
   def get_channels(namespace, endpoint) do
-    [{_, channels}] = :ets.lookup(:channels, {namespace, endpoint})
-    channels
+    case :ets.lookup(:channels, {namespace, endpoint}) do
+      [{_, channels}] -> channels
+      _ -> []
+    end
   end
 end
