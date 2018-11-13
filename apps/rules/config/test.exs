@@ -1,5 +1,5 @@
 use Mix.Config
 
 config :rules,
-  env: :test,
+  env: "test",
   worker: WorkerMock

@@ -1,3 +1,3 @@
 use Mix.Config
 
-config :rules, env: :dev
+config :rules, env: "dev"

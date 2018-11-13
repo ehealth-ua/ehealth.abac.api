@@ -28,7 +28,7 @@ defmodule Rules.Application do
       end
 
     grpc_workers =
-      if Application.fetch_env(:rules, :env) == :prod do
+      if Application.fetch_env!(:rules, :env) == "prod" do
         [
           {Rules.Grpc.Channels, []},
           {Rules.Grpc.Watcher, []}
