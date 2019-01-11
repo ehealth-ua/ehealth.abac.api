@@ -1,0 +1,49 @@
+FORMAT: 1A
+HOST: http://abac.edenlab.com.ua/
+
+# abac
+
+This is the private api of [ABAC service](https://edenlab.atlassian.net/wiki/spaces/EH/pages/619479041/Medical+events+authorization)
+
+## Authorize access to resource [POST /api/abac/authorize]
+
+
+
++ Request (application/json)
+
+    + Attributes (object)
+        + include `Auth_Request`
+
+
++ Response 201 (application/json)
+    + Attributes (object)
+        + data(`Auth_Response`)
+
+
+# Data Structures
+
+## ABAC
+
+### `Resource_Type`
++ `type`: `observation` (string, required) - type of resource that is requested, dictionary `eHealth/resources`
++ id: `71f98299-99a0-4680-b8ec-13d75fe5622b` (string, required) - resource_id
++ action: `read` (string, required) - type of action. Only `read` is supported at the moment 
+
+### `Context_Type`
++ `type`: `episode_of_care` (string, required) - type of resource that is requested, dictionary `eHealth/resources`
++ id: `71f98299-99a0-4680-b8ec-13d75fe5622b` (string, required) - resource_id
+
+
+### `Auth_Request`
++ consumer (object, required)
+    + `user_id`: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required) - user_id from the token
+    + `client_id`: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required) - client_id from token
+    + `client_type`: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required) - client_type of the client from token
++ resource (Resource_Type, required)
++ contexts (array[`Context_Type`], required) - list of contexts, based on which access to resource is requested
+
+    
+
+### `Auth_Response`
++ decision: `true` (boolean, required)
++ conditions (array[object], optional) - TBD, list of aditional conditions that should be applied by the abac consumer
