@@ -1,13 +1,52 @@
 use Mix.Config
 
-config :kazan, :server, :in_cluster
+config :rules,
+  env: Mix.env(),
+  rpc_worker: Rules.Rpc.Worker
 
 config :rules,
-  connections: [
-    %{namespace: "il", endpoint_name: "api-grpc", stub: EHealthGrpc.Stub, timeout: 10_000},
-    %{namespace: "il", endpoint_name: "casher-grpc", stub: CasherGrpc.Stub, timeout: 10_000}
-  ],
-  worker: Rules.Grpc.Worker
+  topologies: [
+    k8s_casher: [
+      strategy: Elixir.Cluster.Strategy.Kubernetes,
+      config: [
+        mode: :dns,
+        kubernetes_node_basename: "casher",
+        kubernetes_selector: "app=casher",
+        kubernetes_namespace: "il",
+        polling_interval: 10_000
+      ]
+    ],
+    k8s_ehealth: [
+      strategy: Elixir.Cluster.Strategy.Kubernetes,
+      config: [
+        mode: :dns,
+        kubernetes_node_basename: "ehealth",
+        kubernetes_selector: "app=ehealth",
+        kubernetes_namespace: "il",
+        polling_interval: 10_000
+      ]
+    ],
+    k8s_ops: [
+      strategy: Elixir.Cluster.Strategy.Kubernetes,
+      config: [
+        mode: :dns,
+        kubernetes_node_basename: "ops",
+        kubernetes_selector: "app=api",
+        kubernetes_namespace: "ops",
+        polling_interval: 10_000
+      ]
+    ],
+    k8s_me: [
+      strategy: Elixir.Cluster.Strategy.Kubernetes,
+      config: [
+        mode: :dns,
+        kubernetes_node_basename: "medical_events_api",
+        kubernetes_selector: "app=api-medical-events",
+        kubernetes_namespace: "me",
+        polling_interval: 10_000
+      ]
+    ]
+  ]
 
 config :rules, Rules.Redis,
   host: {:system, "REDIS_HOST", "0.0.0.0"},

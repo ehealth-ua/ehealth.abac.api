@@ -27,23 +27,22 @@ defmodule Rules.Application do
         }
       end
 
-    grpc_workers =
-      if Confex.fetch_env!(:rules, :env) == "prod" do
-        [
-          {Rules.Grpc.Channels, []},
-          {Rules.Grpc.Watcher, []}
-        ]
-      else
-        []
-      end
-
     children =
       redix_workers ++
-        grpc_workers ++
         [
-          {Rules.Grpc.Worker, []},
           {Rules.Parser, [Application.app_dir(:rules, "priv/features")]}
         ]
+
+    children =
+      if Application.get_env(:rules, :env) == :prod do
+        children ++
+          [
+            {Cluster.Supervisor,
+             [Application.get_env(:rules, :topologies), [name: Rules.ClusterSupervisor]]}
+          ]
+      else
+        children
+      end
 
     # See https://hexdocs.pm/elixir/Supervisor.html
     # for other strategies and supported options

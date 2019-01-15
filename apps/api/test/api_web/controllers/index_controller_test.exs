@@ -2,10 +2,6 @@ defmodule ApiWeb.IndexControllerTest do
   @moduledoc false
 
   use ApiWeb.ConnCase
-  alias EHealthProto.EmployeesResponse
-  alias EHealthProto.EmployeesResponse.Employee
-  alias EHealthProto.PartyUserResponse
-  alias EHealthProto.PartyUserResponse.PartyUser
 
   setup :verify_on_exit!
 
@@ -13,7 +9,7 @@ defmodule ApiWeb.IndexControllerTest do
     test "invalid params", %{conn: conn} do
       response =
         conn
-        |> post(index_path(conn, :check))
+        |> post(index_path(conn, :authorize))
         |> json_response(422)
 
       assert %{
@@ -21,10 +17,6 @@ defmodule ApiWeb.IndexControllerTest do
                  "invalid" => [
                    %{
                      "entry" => "$.consumer",
-                     "rules" => [%{"rule" => "required"}]
-                   },
-                   %{
-                     "entry" => "$.action",
                      "rules" => [%{"rule" => "required"}]
                    },
                    %{
@@ -37,23 +29,21 @@ defmodule ApiWeb.IndexControllerTest do
     end
 
     test "success", %{conn: conn} do
-      expect(WorkerMock, :call, fn _, :party_user, _ ->
-        {:ok, %PartyUserResponse{party_user: %PartyUser{party_id: UUID.uuid4()}}}
-      end)
+      patient_id = UUID.uuid4()
 
-      expect(WorkerMock, :call, fn _, :employees_speciality, _ ->
-        {:ok, %EmployeesResponse{employees: [%Employee{speciality: %{speciality: "THERAPIST"}}]}}
+      expect(RpcWorkerMock, :run, fn "casher", _, :get_person_data, _ ->
+        {:ok, [patient_id]}
       end)
 
       params = %{
         "consumer" => %{"user_id" => UUID.uuid4(), "client_id" => UUID.uuid4(), "client_type" => "MSP"},
-        "action" => "read",
-        "resource" => %{"resource" => %{"type" => "encounter", "id" => UUID.uuid4()}}
+        "resource" => %{"type" => "encounter", "id" => UUID.uuid4(), "action" => "read"},
+        "contexts" => [%{"type" => "patient", "id" => patient_id}]
       }
 
       assert %{"data" => %{"result" => true}} =
                conn
-               |> post(index_path(conn, :check), params)
+               |> post(index_path(conn, :authorize), params)
                |> json_response(200)
     end
   end

@@ -3,7 +3,7 @@ defmodule Api.JsonSchema do
 
   use JValid
 
-  use_schema(:check_request, "json_schemas/check_request.json")
+  use_schema(:authorize_request, "json_schemas/authorize_request.json")
 
   def validate(schema, attrs) do
     @schemas

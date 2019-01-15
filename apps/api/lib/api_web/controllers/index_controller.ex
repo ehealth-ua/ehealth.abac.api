@@ -8,8 +8,8 @@ defmodule ApiWeb.IndexController do
 
   action_fallback(ApiWeb.FallbackController)
 
-  def check(conn, params) do
-    with :ok <- JsonSchema.validate(:check_request, params),
+  def authorize(conn, params) do
+    with :ok <- JsonSchema.validate(:authorize_request, params),
          result <- DecisionManager.check_access(params) do
       render(conn, "index.json", result: result)
     end

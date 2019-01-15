@@ -1,1 +1,1 @@
-Mox.defmock(WorkerMock, for: Rules.Grpc.WorkerBehaviour)
+Mox.defmock(RpcWorkerMock, for: KubeRPC.Client.Behaviour)

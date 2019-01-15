@@ -31,11 +31,11 @@ defmodule Rules.Parser do
     end)
   end
 
-  def get_scenarios(type, action) when is_atom(type) do
+  def get_scenarios(type, action, resource) when is_atom(type) do
     [features: features] = :ets.lookup(@ets_pid, :features)
 
     features
     |> FeatureFilterer.get_for_tags([type])
-    |> FeatureFilterer.get_for_tags([String.to_atom(action)])
+    |> FeatureFilterer.get_for_tags([String.to_atom(action), String.to_atom(resource)])
   end
 end
