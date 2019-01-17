@@ -55,6 +55,4 @@ config :rules, Rules.Redis,
   database: {:system, "REDIS_DATABASE", nil},
   pool_size: {:system, :integer, "REDIS_POOL_SIZE", 5}
 
-config :rules, env: {:system, "ENV", "prod"}
-
 import_config "#{Mix.env()}.exs"
