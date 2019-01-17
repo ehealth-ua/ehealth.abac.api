@@ -16,8 +16,7 @@
       },
       "required": [
         "user_id",
-        "client_id",
-        "client_type"
+        "client_id"
       ],
       "additionalProperties": false
     },
