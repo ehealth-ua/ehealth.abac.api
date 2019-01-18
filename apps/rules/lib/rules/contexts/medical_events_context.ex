@@ -3,6 +3,7 @@ defmodule Rules.Contexts.MedicalEventsContext do
 
   use WhiteBread.Context
   alias Rules.DecisionManager
+  alias Rules.Validations.ApprovalValidator
   alias Rules.Validations.DeclarationValidator
   alias Rules.Validations.MedicalEventsResourceValidator
   import Rules.Context
@@ -26,11 +27,18 @@ defmodule Rules.Contexts.MedicalEventsContext do
   end)
 
   given_("Active approval on patient", fn state ->
-    {:ok, state}
+    {:ok,
+     add_validation(state, &ApprovalValidator.active_approval?/1, [
+       state.patient_id
+     ])}
   end)
 
   given_("Active approval on episode", fn state ->
-    {:ok, state}
+    {:ok,
+     add_validation(state, &ApprovalValidator.active_approval?/2, [
+       state.patient_id,
+       state.resource_id
+     ])}
   end)
 
   given_(~r/^(?<resource>(\w+)) has been created on my MSP$/u, fn

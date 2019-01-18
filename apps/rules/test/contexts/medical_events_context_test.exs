@@ -56,7 +56,7 @@ defmodule Rules.Features.MedicalEventsTest do
     Enum.all?(feature.scenarios, fn scenario ->
       result = ScenarioRunner.run(scenario, @context, setup)
 
-      if scenario.name =~ "can't" do
+      if scenario.name =~ "can't" or scenario.name =~ "approval" do
         assert {:failed, :error} = result
       else
         assert {:ok, _} = result

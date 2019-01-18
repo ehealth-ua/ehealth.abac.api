@@ -30,13 +30,16 @@ defmodule ApiWeb.IndexControllerTest do
 
     test "success", %{conn: conn} do
       patient_id = UUID.uuid4()
+      client_id = UUID.uuid4()
 
-      expect(RpcWorkerMock, :run, fn "casher", _, :get_person_data, _ ->
-        {:ok, [patient_id]}
+      stub(RpcWorkerMock, :run, fn
+        "casher", _, :get_person_data, _ -> {:ok, [patient_id]}
+        "ehealth", _, :employees_by_user_id_client_id, _ -> {:ok, []}
+        "ops", _, :declarations_by_employees, _ -> {:ok, [%{legal_entity_id: client_id}]}
       end)
 
       params = %{
-        "consumer" => %{"user_id" => UUID.uuid4(), "client_id" => UUID.uuid4(), "client_type" => "MSP"},
+        "consumer" => %{"user_id" => UUID.uuid4(), "client_id" => client_id, "client_type" => "MSP"},
         "resource" => %{"type" => "encounter", "id" => UUID.uuid4(), "action" => "read"},
         "contexts" => [%{"type" => "patient", "id" => patient_id}]
       }
