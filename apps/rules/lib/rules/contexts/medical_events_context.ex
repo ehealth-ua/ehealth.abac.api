@@ -35,9 +35,12 @@ defmodule Rules.Contexts.MedicalEventsContext do
 
   given_("Active approval on episode", fn state ->
     {:ok,
-     add_validation(state, &ApprovalValidator.active_approval?/2, [
+     add_validation(state, &ApprovalValidator.active_approval?/5, [
        state.patient_id,
-       state.resource_id
+       state.user_id,
+       state.client_id,
+       state.resource_id,
+       state.resource_type
      ])}
   end)
 

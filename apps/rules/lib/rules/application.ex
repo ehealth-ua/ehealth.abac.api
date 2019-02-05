@@ -37,8 +37,7 @@ defmodule Rules.Application do
       if Application.get_env(:rules, :env) == :prod do
         children ++
           [
-            {Cluster.Supervisor,
-             [Application.get_env(:rules, :topologies), [name: Rules.ClusterSupervisor]]}
+            {Cluster.Supervisor, [Application.get_env(:rules, :topologies), [name: Rules.ClusterSupervisor]]}
           ]
       else
         children

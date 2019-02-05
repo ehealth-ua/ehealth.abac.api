@@ -20,8 +20,8 @@ defmodule Rules.Validations.DeclarationValidator do
              user_id,
              client_id
            ]),
-         {:ok, declarations} <-
-           @rpc_worker.run("ops", Core.Rpc, :declarations_by_employees, [
+         declarations <-
+           @rpc_worker.run("ops", OPS.Rpc, :declarations_by_employees, [
              employee_ids,
              [:legal_entity_id]
            ]) do

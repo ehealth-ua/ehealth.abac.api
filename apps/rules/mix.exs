@@ -34,8 +34,7 @@ defmodule Rules.MixProject do
       {:redix, "~> 0.8.2"},
       {:confex, "~> 3.4"},
       {:mox, "~> 0.4.0"},
-      {:libcluster, "~> 3.0",
-       git: "https://github.com/AlexKovalevych/libcluster.git", branch: "kube_namespaces"},
+      {:libcluster, "~> 3.0", git: "https://github.com/AlexKovalevych/libcluster.git", branch: "kube_namespaces"},
       {:white_bread, "~> 4.3"},
       {:gherkin, "~> 1.6"},
       {:uuid, "~> 1.1"}

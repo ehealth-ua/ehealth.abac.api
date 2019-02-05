@@ -35,7 +35,7 @@ defmodule ApiWeb.IndexControllerTest do
       stub(RpcWorkerMock, :run, fn
         "casher", _, :get_person_data, _ -> {:ok, [patient_id]}
         "ehealth", _, :employees_by_user_id_client_id, _ -> {:ok, []}
-        "ops", _, :declarations_by_employees, _ -> {:ok, [%{legal_entity_id: client_id}]}
+        "ops", _, :declarations_by_employees, _ -> [%{legal_entity_id: client_id}]
       end)
 
       params = %{

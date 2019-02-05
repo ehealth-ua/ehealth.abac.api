@@ -11,11 +11,10 @@ addons:
   apt:
     packages:
       - docker-ce
-
 elixir:
   - 1.7.4
 otp_release:
-  - 21.0.6
+  - 21.2.5
 notifications:
   slack:
     rooms:
