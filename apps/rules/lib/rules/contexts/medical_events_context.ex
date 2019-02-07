@@ -35,23 +35,25 @@ defmodule Rules.Contexts.MedicalEventsContext do
 
   given_("Active approval on episode", fn state ->
     {:ok,
-     add_validation(state, &ApprovalValidator.active_approval?/5, [
+     add_validation(state, &ApprovalValidator.active_approval?/6, [
        state.patient_id,
        state.user_id,
        state.client_id,
        state.resource_id,
-       state.resource_type
+       state.resource_type,
+       state.contexts
      ])}
   end)
 
   given_(~r/^(?<resource>(\w+)) has been created on my MSP$/u, fn
     state, %{resource: resource_type} ->
       {:ok,
-       add_validation(state, &MedicalEventsResourceValidator.same_msp_resource?/4, [
+       add_validation(state, &MedicalEventsResourceValidator.same_msp_resource?/5, [
+         state.patient_id,
          state.client_id,
-         String.downcase(resource_type),
          state.resource_id,
-         state.patient_id
+         String.downcase(resource_type),
+         state.contexts
        ])}
   end)
 

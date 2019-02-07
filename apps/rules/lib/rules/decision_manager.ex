@@ -23,7 +23,8 @@ defmodule Rules.DecisionManager do
         resource_id: params["resource"]["id"],
         user_id: params["consumer"]["user_id"],
         client_id: params["consumer"]["client_id"],
-        client_type: params["consumer"]["client_type"]
+        client_type: params["consumer"]["client_type"],
+        contexts: params["contexts"]
       }
     }
 
