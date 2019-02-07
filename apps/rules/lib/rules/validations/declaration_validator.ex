@@ -39,7 +39,7 @@ defmodule Rules.Validations.DeclarationValidator do
       _ ->
         with {:ok, %{person_ids: patient_ids}} <-
                @rpc_worker.run("casher", Casher.Rpc, :get_person_data, [
-                 %{user_id: user_id, client_id: client_id}
+                 %{"user_id" => user_id, "client_id" => client_id}
                ]) do
           {:ok, patient_ids}
         end

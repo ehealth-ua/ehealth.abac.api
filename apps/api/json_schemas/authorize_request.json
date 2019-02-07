@@ -42,8 +42,7 @@
       },
       "required": [
         "action",
-        "type",
-        "id"
+        "type"
       ]
     },
     "context": {
