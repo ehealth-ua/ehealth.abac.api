@@ -247,7 +247,7 @@ defmodule Rules.DecisionManagerTest do
 
       stub(RpcWorkerMock, :run, fn
         "medical_events_api", _, :episode_by_id, _ ->
-          {:ok, %{care_manager: %{identifier: %{value: client_id}}}}
+          {:ok, %{managing_organization: %{identifier: %{value: client_id}}}}
       end)
 
       assert DecisionManager.check_access(%{

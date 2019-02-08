@@ -9,7 +9,7 @@ defmodule Rules.MixProject do
       config_path: "../../config/config.exs",
       deps_path: "../../deps",
       lockfile: "../../mix.lock",
-      elixir: "~> 1.7",
+      elixir: "~> 1.8",
       start_permanent: Mix.env() == :prod,
       elixirc_paths: elixirc_paths(Mix.env()),
       deps: deps()
@@ -35,7 +35,7 @@ defmodule Rules.MixProject do
       {:confex, "~> 3.4"},
       {:mox, "~> 0.4.0"},
       {:libcluster, "~> 3.0", git: "https://github.com/AlexKovalevych/libcluster.git", branch: "kube_namespaces"},
-      {:white_bread, "~> 4.3"},
+      {:white_bread, "~> 4.5"},
       {:gherkin, "~> 1.6"},
       {:uuid, "~> 1.1"}
     ]

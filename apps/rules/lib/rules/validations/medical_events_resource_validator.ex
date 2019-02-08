@@ -5,7 +5,7 @@ defmodule Rules.Validations.MedicalEventsResourceValidator do
 
   def same_msp_resource?(patient_id, client_id, nil, "episode", contexts) do
     with {:ok, episode} <- get_episode(patient_id, contexts) do
-      episode.care_manager.identifier.value == client_id
+      episode.managing_organization.identifier.value == client_id
     end
   end
 
@@ -15,7 +15,7 @@ defmodule Rules.Validations.MedicalEventsResourceValidator do
              patient_id,
              resource_id
            ]) do
-      episode.care_manager.identifier.value == client_id
+      episode.managing_organization.identifier.value == client_id
     end
   end
 
