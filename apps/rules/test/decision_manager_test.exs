@@ -7,6 +7,11 @@ defmodule Rules.DecisionManagerTest do
 
   setup :verify_on_exit!
 
+  setup do
+    expect(KafkaMock, :publish_log, fn _ -> :ok end)
+    :ok
+  end
+
   describe "read episode" do
     test "no access" do
       refute DecisionManager.check_access(%{

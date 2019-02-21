@@ -40,4 +40,20 @@ release :abac_api do
       rules: :permanent
     ]
   )
+
+  set(config_providers: [ConfexConfigProvider])
+end
+
+release :abac_log_consumer do
+  set(version: current_version(:abac_log_consumer))
+
+  set(
+    applications: [
+      :runtime_tools,
+      abac_log_consumer: :permanent,
+      core: :permanent
+    ]
+  )
+
+  set(config_providers: [ConfexConfigProvider])
 end

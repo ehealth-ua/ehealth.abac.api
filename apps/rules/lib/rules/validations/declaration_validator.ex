@@ -1,8 +1,8 @@
 defmodule Rules.Validations.DeclarationValidator do
   @moduledoc false
 
-  alias Rules.Redis
-  alias Rules.Redis.StorageKeys
+  alias Core.Redis
+  alias Core.Redis.StorageKeys
 
   @rpc_worker Application.get_env(:rules, :rpc_worker)
 

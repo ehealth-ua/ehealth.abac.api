@@ -29,6 +29,7 @@ defmodule ApiWeb.IndexControllerTest do
     end
 
     test "success", %{conn: conn} do
+      expect(KafkaMock, :publish_log, fn _ -> :ok end)
       patient_id = UUID.uuid4()
       client_id = UUID.uuid4()
 

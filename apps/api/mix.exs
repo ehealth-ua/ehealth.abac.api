@@ -38,10 +38,11 @@ defmodule Api.Mixfile do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
+      {:confex_config_provider, "~> 0.1.0"},
       {:rules, in_umbrella: true},
       {:eview, "~> 0.14.0"},
       {:jvalid, "~> 0.7.0"},
-      {:phoenix, "~> 1.4.0-rc.2"},
+      {:phoenix, "~> 1.4"},
       {:eview, "~> 0.14.0"},
       {:jason, "~> 1.1"},
       {:cowboy, "~> 2.5"},

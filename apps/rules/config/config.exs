@@ -48,11 +48,12 @@ config :rules,
     ]
   ]
 
-config :rules, Rules.Redis,
-  host: {:system, "REDIS_HOST", "0.0.0.0"},
-  port: {:system, :integer, "REDIS_PORT", 6379},
-  password: {:system, "REDIS_PASSWORD", nil},
-  database: {:system, "REDIS_DATABASE", nil},
-  pool_size: {:system, :integer, "REDIS_POOL_SIZE", 5}
+config :kaffe,
+  producer: [
+    endpoints: [localhost: 9092],
+    topics: ["abac_logs"]
+  ]
+
+config :rules, :kafka, producer: Rules.Kafka.Producer
 
 import_config "#{Mix.env()}.exs"

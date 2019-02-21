@@ -12,6 +12,9 @@
         },
         "client_type": {
           "type": "string"
+        },
+        "mis_client_id": {
+          "type": "string"
         }
       },
       "required": [
