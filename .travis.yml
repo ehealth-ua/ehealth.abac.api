@@ -56,7 +56,7 @@ jobs:
     - stage: "test and build"
       name: "Abac logs Consumer"
       env:
-      - APPS='[{"app":"abac_log_consumer","chart":"abac-api","namespace":"abac","deployment":"abac-logs-consumer","label":"abac-logs-consumer"}]'
+      - APPS='[{"app":"abac_log_consumer","chart":"abac-api","namespace":"abac","deployment":"abac-log-consumer","label":"abac-log-consumer"}]'
       # "Decrypting deploy key..."
       script:
       - openssl aes-256-cbc -K $encrypted_981a807ebf92_key -iv $encrypted_981a807ebf92_iv -in eHealth-8110bd102a69.json.enc -out eHealth-8110bd102a69.json -d
