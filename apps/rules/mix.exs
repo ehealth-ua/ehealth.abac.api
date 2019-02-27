@@ -33,7 +33,7 @@ defmodule Rules.MixProject do
   defp deps do
     [
       {:kube_rpc, git: "https://github.com/edenlabllc/kube_rpc.git"},
-      {:kaffe, git: "https://github.com/AlexKovalevych/kaffe.git", branch: "string_endpoints"},
+      {:kaffe, "~> 1.11"},
       {:confex, "~> 3.4"},
       {:libcluster, "~> 3.0", git: "https://github.com/AlexKovalevych/libcluster.git", branch: "kube_namespaces"},
       {:white_bread, "~> 4.5"},
