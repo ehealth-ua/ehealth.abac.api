@@ -78,6 +78,32 @@ defmodule Rules.DecisionManagerTest do
              })
     end
 
+    test "success on same MSP episode context" do
+      patient_id = UUID.uuid4()
+      client_id = UUID.uuid4()
+
+      stub(RpcWorkerMock, :run, fn
+        "medical_events_api", _, :episode_by_id, _ ->
+          {:ok, %{managing_organization: %{identifier: %{value: client_id}}}}
+
+        "ops", _, :declarations_by_employees, _ ->
+          []
+      end)
+
+      assert DecisionManager.check_access(%{
+               "resource" => %{"type" => "encounter", "action" => "read", "id" => UUID.uuid4()},
+               "consumer" => %{
+                 "user_id" => UUID.uuid4(),
+                 "client_id" => client_id,
+                 "client_type" => "MIS"
+               },
+               "contexts" => [
+                 %{"type" => "patient", "id" => patient_id},
+                 %{"type" => "episode", "id" => UUID.uuid4()}
+               ]
+             })
+    end
+
     test "success access to encounter on active approval on episode" do
       patient_id = UUID.uuid4()
       client_id = UUID.uuid4()

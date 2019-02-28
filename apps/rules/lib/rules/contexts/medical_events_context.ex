@@ -57,6 +57,17 @@ defmodule Rules.Contexts.MedicalEventsContext do
        ])}
   end)
 
+  given_(~r/^(?<resource>(\w+)) context has been created on my MSP$/u, fn
+    state, %{resource: context_resource_type} ->
+      {:ok,
+       add_validation(state, &MedicalEventsResourceValidator.same_msp_context?/4, [
+         state.patient_id,
+         state.client_id,
+         String.downcase(context_resource_type),
+         state.contexts
+       ])}
+  end)
+
   @doc "Request access to resource by action name"
   when_(~r/^I require (?<action_name>(create|read|update|action)) access$/, fn
     state, %{action_name: _action_name} ->

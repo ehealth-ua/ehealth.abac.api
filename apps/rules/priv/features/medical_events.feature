@@ -13,21 +13,28 @@ Feature: Medical events
         When I require read access
         Then I can read
 
-    @rule_2 @read @episode @encounter @observation @condition @allergy_intolerance @immunization
-    Scenario: Doctor can read all the data of episodes created in the doctors MSP
+    @rule_2 @read @episode
+    Scenario: Doctor can read episode created in the doctors MSP
         Given Episode has been created on my MSP
         #contexts.resource.legal_entity_id = consumer.client_id
         When I require read access
         Then I can read
 
-    @rule_3 @read @episode @encounter @observation @condition @allergy_intolerance @immunization
+    @rule_3 @read @encounter @observation @condition @allergy_intolerance @immunization
+    Scenario: Doctor can read all the data of episodes created in the doctors MSP
+        Given Episode context has been created on my MSP
+        #contexts.resource.legal_entity_id = consumer.client_id
+        When I require read access
+        Then I can read
+
+    @rule_4 @read @episode @encounter @observation @condition @allergy_intolerance @immunization
     Scenario: Doctor with active approval can read all the data of specified in approval patient
         Given Active approval on patient
         #contexts.patient_id in consumer.employees[].approvals[].approved_objects[].mpi_id
         When I require read access
         Then I can read
 
-    @rule_4 @read @episode @encounter @observation @condition @allergy_intolerance @immunization
+    @rule_5 @read @episode @encounter @observation @condition @allergy_intolerance @immunization
     Scenario: Doctor with active approval can read all the data of specified in approval episodes
         Given Active approval on episode
         #contexts.episode_id in consumer.employees[].approvals[].approved_objects[].episode_id

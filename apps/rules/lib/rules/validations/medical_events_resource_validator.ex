@@ -21,6 +21,14 @@ defmodule Rules.Validations.MedicalEventsResourceValidator do
 
   def same_msp_resource?(_, _, _, _, _), do: false
 
+  def same_msp_context?(patient_id, client_id, "episode", contexts) do
+    with {:ok, episode} <- get_episode(patient_id, contexts) do
+      episode.managing_organization.identifier.value == client_id
+    end
+  end
+
+  def same_msp_context?(_, _, _, _), do: false
+
   defp get_episode(patient_id, contexts) do
     case Enum.find(contexts, &(Map.get(&1, "type") == "episode")) do
       nil ->
