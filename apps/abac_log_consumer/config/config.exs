@@ -6,7 +6,7 @@ config :abac_log_consumer,
 
 config :abac_log_consumer,
   topologies: [
-    k8s_casher: [
+    k8s_mithril: [
       strategy: Elixir.Cluster.Strategy.Kubernetes,
       config: [
         mode: :dns,

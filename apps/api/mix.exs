@@ -43,7 +43,6 @@ defmodule Api.Mixfile do
       {:eview, "~> 0.14.0"},
       {:jvalid, "~> 0.7.0"},
       {:phoenix, "~> 1.4"},
-      {:eview, "~> 0.14.0"},
       {:jason, "~> 1.1"},
       {:cowboy, "~> 2.5"},
       {:plug_cowboy, "~> 2.0"}

@@ -6,7 +6,7 @@ config :logger_json, :backend,
 
 config :logger,
   backends: [LoggerJSON],
-  level: :debug
+  level: :info
 
 config :core, Core.Redis,
   host: {:system, "REDIS_HOST", "0.0.0.0"},

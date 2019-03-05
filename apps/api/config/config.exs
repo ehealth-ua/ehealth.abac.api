@@ -16,12 +16,8 @@ config :api, ApiWeb.Endpoint,
   render_errors: [
     view: EView.Views.PhoenixError,
     accepts: ~w(json)
-  ]
-
-# Configures Elixir's Logger
-config :logger, :console,
-  format: "$time $metadata[$level] $message\n",
-  metadata: [:user_id]
+  ],
+  instrumenters: [LoggerJSON.Phoenix.Instruments]
 
 config :phoenix, :json_library, Jason
 
