@@ -1,9 +1,9 @@
 defmodule ApiWeb.Endpoint do
   use Phoenix.Endpoint, otp_app: :api
 
-  plug(Plug.Logger)
   plug(Plug.RequestId)
   plug(EView.Plugs.Idempotency)
+  plug(EhealthLogger.Plug, level: Logger.level())
   plug(EView)
 
   plug(

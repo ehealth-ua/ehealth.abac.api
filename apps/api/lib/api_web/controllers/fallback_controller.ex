@@ -15,13 +15,7 @@ defmodule ApiWeb.FallbackController do
   end
 
   def call(conn, params) do
-    Logger.error(fn ->
-      Jason.encode!(%{
-        "log_type" => "error",
-        "message" => "No function clause matching in ApiWeb.FallbackController.call/2: #{inspect(params)}",
-        "request_id" => Logger.metadata()[:request_id]
-      })
-    end)
+    Logger.error("No function clause matching in ApiWeb.FallbackController.call/2: #{inspect(params)}")
 
     conn
     |> put_status(:not_implemented)

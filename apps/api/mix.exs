@@ -40,7 +40,7 @@ defmodule Api.Mixfile do
     [
       {:confex_config_provider, "~> 0.1.0"},
       {:rules, in_umbrella: true},
-      {:eview, "~> 0.14.0"},
+      {:eview, "~> 0.15"},
       {:jvalid, "~> 0.7.0"},
       {:phoenix, "~> 1.4"},
       {:jason, "~> 1.1"},
