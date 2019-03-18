@@ -9,7 +9,17 @@ defmodule Rules.DecisionManager do
   alias WhiteBread.Runners.Setup
   require Logger
 
-  @medical_events_resources ~w(encounter episode observation condition immunization allergy_intolerance)
+  @medical_events_resources ~w(
+    encounter
+    episode
+    observation
+    condition
+    immunization
+    allergy_intolerance
+    risk_assessment
+    device
+    medication_statement
+  )
   @medical_events_context Rules.Contexts.MedicalEventsContext
 
   @kafka_producer Application.get_env(:rules, :kafka)[:producer]

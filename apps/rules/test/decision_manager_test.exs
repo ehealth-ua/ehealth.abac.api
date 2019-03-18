@@ -104,7 +104,7 @@ defmodule Rules.DecisionManagerTest do
              })
     end
 
-    test "failed to access to encounter on active approval on episode" do
+    test "success to access to encounter on active approval on episode" do
       patient_id = UUID.uuid4()
       client_id = UUID.uuid4()
       employee_ids = [UUID.uuid4()]
@@ -116,11 +116,14 @@ defmodule Rules.DecisionManagerTest do
         "ehealth", _, :employees_by_user_id_client_id, _ ->
           {:ok, employee_ids}
 
+        "medical_events_api", _, :episode_by_encounter_id, _ ->
+          {:ok, %{id: UUID.uuid4()}}
+
         "medical_events_api", _, :approvals_by_episode, _ ->
           [%{}]
       end)
 
-      refute DecisionManager.check_access(%{
+      assert DecisionManager.check_access(%{
                "resource" => %{"type" => "encounter", "action" => "read", "id" => UUID.uuid4()},
                "consumer" => %{
                  "user_id" => UUID.uuid4(),
@@ -133,7 +136,7 @@ defmodule Rules.DecisionManagerTest do
              })
     end
 
-    test "failed to access to observation on active approval on episode" do
+    test "success to access to observation on active approval on episode" do
       patient_id = UUID.uuid4()
       client_id = UUID.uuid4()
       employee_ids = [UUID.uuid4()]
@@ -147,9 +150,12 @@ defmodule Rules.DecisionManagerTest do
 
         "medical_events_api", _, :approvals_by_episode, _ ->
           [%{}]
+
+        "medical_events_api", _, :episode_by_observation_id, _ ->
+          {:ok, %{id: UUID.uuid4()}}
       end)
 
-      refute DecisionManager.check_access(%{
+      assert DecisionManager.check_access(%{
                "resource" => %{"type" => "observation", "action" => "read", "id" => UUID.uuid4()},
                "consumer" => %{
                  "user_id" => UUID.uuid4(),
@@ -162,7 +168,7 @@ defmodule Rules.DecisionManagerTest do
              })
     end
 
-    test "failed to access to condition on active approval on episode" do
+    test "success to access to condition on active approval on episode" do
       patient_id = UUID.uuid4()
       client_id = UUID.uuid4()
       employee_ids = [UUID.uuid4()]
@@ -176,9 +182,12 @@ defmodule Rules.DecisionManagerTest do
 
         "medical_events_api", _, :approvals_by_episode, _ ->
           [%{}]
+
+        "medical_events_api", _, :episode_by_condition_id, _ ->
+          {:ok, %{id: UUID.uuid4()}}
       end)
 
-      refute DecisionManager.check_access(%{
+      assert DecisionManager.check_access(%{
                "resource" => %{"type" => "condition", "action" => "read", "id" => UUID.uuid4()},
                "consumer" => %{
                  "user_id" => UUID.uuid4(),
@@ -191,7 +200,7 @@ defmodule Rules.DecisionManagerTest do
              })
     end
 
-    test "failed to access to allergy_intolerance on active approval on episode" do
+    test "success to access to allergy_intolerance on active approval on episode" do
       patient_id = UUID.uuid4()
       client_id = UUID.uuid4()
       employee_ids = [UUID.uuid4()]
@@ -210,7 +219,7 @@ defmodule Rules.DecisionManagerTest do
           [%{}]
       end)
 
-      refute DecisionManager.check_access(%{
+      assert DecisionManager.check_access(%{
                "resource" => %{
                  "type" => "allergy_intolerance",
                  "action" => "read",
@@ -227,7 +236,7 @@ defmodule Rules.DecisionManagerTest do
              })
     end
 
-    test "failed to access to immunization on active approval on episode" do
+    test "success to access to immunization on active approval on episode" do
       patient_id = UUID.uuid4()
       client_id = UUID.uuid4()
       employee_ids = [UUID.uuid4()]
@@ -241,11 +250,122 @@ defmodule Rules.DecisionManagerTest do
 
         "medical_events_api", _, :approvals_by_episode, _ ->
           [%{}]
+
+        "medical_events_api", _, :episode_by_immunization_id, _ ->
+          {:ok, %{id: UUID.uuid4()}}
       end)
 
-      refute DecisionManager.check_access(%{
+      assert DecisionManager.check_access(%{
                "resource" => %{
                  "type" => "immunization",
+                 "action" => "read",
+                 "id" => UUID.uuid4()
+               },
+               "consumer" => %{
+                 "user_id" => UUID.uuid4(),
+                 "client_id" => client_id,
+                 "client_type" => "MIS"
+               },
+               "contexts" => [
+                 %{"type" => "patient", "id" => patient_id}
+               ]
+             })
+    end
+
+    test "success to access to risk assessment on active approval on episode" do
+      patient_id = UUID.uuid4()
+      client_id = UUID.uuid4()
+      employee_ids = [UUID.uuid4()]
+
+      stub(RpcWorkerMock, :run, fn
+        "ops", _, :declarations_by_employees, _ ->
+          []
+
+        "ehealth", _, :employees_by_user_id_client_id, _ ->
+          {:ok, employee_ids}
+
+        "medical_events_api", _, :approvals_by_episode, _ ->
+          [%{}]
+
+        "medical_events_api", _, :episode_by_risk_assessment_id, _ ->
+          {:ok, %{id: UUID.uuid4()}}
+      end)
+
+      assert DecisionManager.check_access(%{
+               "resource" => %{
+                 "type" => "risk_assessment",
+                 "action" => "read",
+                 "id" => UUID.uuid4()
+               },
+               "consumer" => %{
+                 "user_id" => UUID.uuid4(),
+                 "client_id" => client_id,
+                 "client_type" => "MIS"
+               },
+               "contexts" => [
+                 %{"type" => "patient", "id" => patient_id}
+               ]
+             })
+    end
+
+    test "success to access to device on active approval on episode" do
+      patient_id = UUID.uuid4()
+      client_id = UUID.uuid4()
+      employee_ids = [UUID.uuid4()]
+
+      stub(RpcWorkerMock, :run, fn
+        "ops", _, :declarations_by_employees, _ ->
+          []
+
+        "ehealth", _, :employees_by_user_id_client_id, _ ->
+          {:ok, employee_ids}
+
+        "medical_events_api", _, :approvals_by_episode, _ ->
+          [%{}]
+
+        "medical_events_api", _, :episode_by_device_id, _ ->
+          {:ok, %{id: UUID.uuid4()}}
+      end)
+
+      assert DecisionManager.check_access(%{
+               "resource" => %{
+                 "type" => "device",
+                 "action" => "read",
+                 "id" => UUID.uuid4()
+               },
+               "consumer" => %{
+                 "user_id" => UUID.uuid4(),
+                 "client_id" => client_id,
+                 "client_type" => "MIS"
+               },
+               "contexts" => [
+                 %{"type" => "patient", "id" => patient_id}
+               ]
+             })
+    end
+
+    test "success to access to medication statement on active approval on episode" do
+      patient_id = UUID.uuid4()
+      client_id = UUID.uuid4()
+      employee_ids = [UUID.uuid4()]
+
+      stub(RpcWorkerMock, :run, fn
+        "ops", _, :declarations_by_employees, _ ->
+          []
+
+        "ehealth", _, :employees_by_user_id_client_id, _ ->
+          {:ok, employee_ids}
+
+        "medical_events_api", _, :approvals_by_episode, _ ->
+          [%{}]
+
+        "medical_events_api", _, :episode_by_medication_statement_id, _ ->
+          {:ok, %{id: UUID.uuid4()}}
+      end)
+
+      assert DecisionManager.check_access(%{
+               "resource" => %{
+                 "type" => "medication_statement",
                  "action" => "read",
                  "id" => UUID.uuid4()
                },
