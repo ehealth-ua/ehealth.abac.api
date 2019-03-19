@@ -1,8 +1,6 @@
 defmodule Core.Behaviours.KafkaProducerBehaviour do
   @moduledoc false
 
-  alias Core.AuditLogs.Log
-
   @callback publish_log(request :: any) ::
               :ok
               | {:ok, integer}

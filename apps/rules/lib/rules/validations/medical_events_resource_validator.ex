@@ -1,7 +1,7 @@
 defmodule Rules.Validations.MedicalEventsResourceValidator do
   @moduledoc false
 
-  @rpc_worker Application.get_env(:rules, :rpc_worker)
+  alias Rules.Rpc.Cache
 
   def same_msp_resource?(patient_id, client_id, nil, "episode", contexts) do
     with {:ok, episode} <- get_episode(patient_id, contexts) do
@@ -11,7 +11,7 @@ defmodule Rules.Validations.MedicalEventsResourceValidator do
 
   def same_msp_resource?(patient_id, client_id, resource_id, "episode", _) do
     with {:ok, episode} <-
-           @rpc_worker.run("medical_events_api", Api.Rpc, :episode_by_id, [
+           Cache.run("medical_events_api", Api.Rpc, :episode_by_id, [
              patient_id,
              resource_id
            ]) do
@@ -36,7 +36,7 @@ defmodule Rules.Validations.MedicalEventsResourceValidator do
 
       %{"id" => id} ->
         with {:ok, episode} <-
-               @rpc_worker.run("medical_events_api", Api.Rpc, :episode_by_id, [
+               Cache.run("medical_events_api", Api.Rpc, :episode_by_id, [
                  patient_id,
                  id
                ]) do

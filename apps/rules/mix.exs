@@ -34,7 +34,6 @@ defmodule Rules.MixProject do
     [
       {:kube_rpc, "~> 0.1.0"},
       {:kaffe, "~> 1.11"},
-      {:confex, "~> 3.4"},
       {:libcluster, "~> 3.0", git: "https://github.com/AlexKovalevych/libcluster.git", branch: "kube_namespaces"},
       {:white_bread, "~> 4.5"},
       {:gherkin, "~> 1.6"},

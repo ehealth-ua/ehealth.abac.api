@@ -3,6 +3,7 @@ defmodule Rules.Validations.DeclarationValidator do
 
   alias Core.Redis
   alias Core.Redis.StorageKeys
+  alias Rules.Rpc.Cache
 
   @rpc_worker Application.get_env(:rules, :rpc_worker)
 
@@ -16,12 +17,12 @@ defmodule Rules.Validations.DeclarationValidator do
 
   def same_msp_declaration?(client_id, user_id) do
     with {:ok, employee_ids} <-
-           @rpc_worker.run("ehealth", Core.Rpc, :employees_by_user_id_client_id, [
+           Cache.run("ehealth", Core.Rpc, :employees_by_user_id_client_id, [
              user_id,
              client_id
            ]),
          declarations <-
-           @rpc_worker.run("ops", OPS.Rpc, :declarations_by_employees, [
+           Cache.run("ops", OPS.Rpc, :declarations_by_employees, [
              employee_ids,
              [:legal_entity_id]
            ]) do

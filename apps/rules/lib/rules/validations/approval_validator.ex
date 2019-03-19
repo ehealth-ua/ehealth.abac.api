@@ -1,7 +1,7 @@
 defmodule Rules.Validations.ApprovalValidator do
   @moduledoc false
 
-  @rpc_worker Application.get_env(:rules, :rpc_worker)
+  alias Rules.Rpc.Cache
 
   @doc "Not implemented"
   def active_approval?(_), do: false
@@ -94,7 +94,7 @@ defmodule Rules.Validations.ApprovalValidator do
     case Enum.find(contexts, &(Map.get(&1, "type") == "episode")) do
       nil ->
         with {:ok, episode} <-
-               @rpc_worker.run("medical_events_api", Api.Rpc, rpc_fun, [
+               Cache.run("medical_events_api", Api.Rpc, rpc_fun, [
                  patient_id,
                  resource_id
                ]) do
@@ -113,11 +113,11 @@ defmodule Rules.Validations.ApprovalValidator do
 
   defp get_approvals(patient_id, user_id, client_id, episode_id) do
     with {:ok, employee_ids} <-
-           @rpc_worker.run("ehealth", Core.Rpc, :employees_by_user_id_client_id, [
+           Cache.run("ehealth", Core.Rpc, :employees_by_user_id_client_id, [
              user_id,
              client_id
            ]) do
-      case @rpc_worker.run("medical_events_api", Api.Rpc, :approvals_by_episode, [
+      case Cache.run("medical_events_api", Api.Rpc, :approvals_by_episode, [
              patient_id,
              employee_ids,
              episode_id

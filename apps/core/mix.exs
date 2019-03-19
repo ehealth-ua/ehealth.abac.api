@@ -28,6 +28,7 @@ defmodule Core.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
+      {:confex, "~> 3.4"},
       {:mongodb, "~> 0.4.7"},
       {:poolboy, "~> 1.5"},
       {:redix, "~> 0.8.2"},
