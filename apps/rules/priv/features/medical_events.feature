@@ -3,7 +3,7 @@ Feature: Medical events
 
     Attribute based permissions for medical events
 
-    @rule_1 @read @episode @encounter @observation @condition @allergy_intolerance @immunization
+    @rule_1 @read @episode @encounter @observation @condition @allergy_intolerance @immunization @service_request
     Scenario: Doctor with active declaration can read all patient data
         Given Active declaration with patient
         And declaration from the same MSP
@@ -16,20 +16,26 @@ Feature: Medical events
         When I require read access
         Then I can read
 
-    @rule_3 @read @encounter @observation @condition @allergy_intolerance @immunization @risk_assessment @device @medication_statement
+    @rule_3 @read @encounter @observation @condition @allergy_intolerance @immunization @risk_assessment @device @medication_statement @service_request
     Scenario: Doctor can read all the data of episodes created in the doctors MSP
         Given Episode context has been created on my MSP
         When I require read access
         Then I can read
 
-    @rule_4 @read @episode @encounter @observation @condition @allergy_intolerance @immunization @risk_assessment @device @medication_statement
+    @rule_4 @read @episode @encounter @observation @condition @allergy_intolerance @immunization @risk_assessment @device @medication_statement @service_request
     Scenario: Doctor with active approval can read all the data of specified in approval patient
         Given Active approval on patient
         When I require read access
         Then I can read
 
-    @rule_5 @read @episode @encounter @observation @condition @allergy_intolerance @immunization @risk_assessment @device @medication_statement
+    @rule_5 @read @episode @encounter @observation @condition @allergy_intolerance @immunization @risk_assessment @device @medication_statement @service_request
     Scenario: Doctor with active approval can read all the data of specified in approval episodes
         Given Active approval on episode
+        When I require read access
+        Then I can read
+
+    @rule_6 @read @service_request
+    Scenario: Doctor can read service request created in the doctors MSP
+        Given Service_request has been created on my MSP
         When I require read access
         Then I can read
