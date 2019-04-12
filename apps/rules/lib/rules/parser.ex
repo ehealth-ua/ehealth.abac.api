@@ -34,8 +34,15 @@ defmodule Rules.Parser do
   def get_scenarios(type, action, resource) when is_atom(type) do
     [features: features] = :ets.lookup(@ets_pid, :features)
 
-    features
-    |> FeatureFilterer.get_for_tags([type])
-    |> FeatureFilterer.get_for_tags([String.to_atom(action), String.to_atom(resource)])
+    feature =
+      features
+      |> FeatureFilterer.get_for_tags([type])
+      |> List.first() || %{}
+
+    feature
+    |> Map.get(:scenarios)
+    |> Enum.filter(fn scenario ->
+      String.to_atom(action) in scenario.tags and String.to_atom(resource) in scenario.tags
+    end)
   end
 end

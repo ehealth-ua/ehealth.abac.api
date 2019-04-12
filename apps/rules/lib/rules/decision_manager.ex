@@ -2,7 +2,6 @@ defmodule Rules.DecisionManager do
   @moduledoc false
 
   alias Core.AuditLogs.Log
-  alias Gherkin.Elements.Feature
   alias Gherkin.Elements.Scenario
   alias Rules.Parser
   alias WhiteBread.Runners.ScenarioRunner
@@ -19,6 +18,7 @@ defmodule Rules.DecisionManager do
     risk_assessment
     device
     medication_statement
+    service_request
   )
   @medical_events_context Rules.Contexts.MedicalEventsContext
 
@@ -27,7 +27,7 @@ defmodule Rules.DecisionManager do
   def check_access(%{"resource" => %{"type" => type, "action" => action}} = params)
       when type in @medical_events_resources do
     :ets.new(:cache, [:named_table, :public, :set])
-    [%Feature{scenarios: scenarios}] = Parser.get_scenarios(:medical_events, action, type)
+    scenarios = Parser.get_scenarios(:medical_events, action, type)
 
     patient = Enum.find(params["contexts"] || [], &(Map.get(&1, "type") == "patient")) || %{}
 

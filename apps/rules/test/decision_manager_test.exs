@@ -380,6 +380,78 @@ defmodule Rules.DecisionManagerTest do
              })
     end
 
+    test "success to access to service request on active approval on episode" do
+      patient_id = UUID.uuid4()
+      client_id = UUID.uuid4()
+      employee_ids = [UUID.uuid4()]
+
+      stub(RpcWorkerMock, :run, fn
+        "ops", _, :declarations_by_employees, _ ->
+          []
+
+        "ehealth", _, :employees_by_user_id_client_id, _ ->
+          {:ok, employee_ids}
+
+        "medical_events_api", _, :approvals_by_episode, _ ->
+          [%{}]
+
+        "medical_events_api", _, :episode_by_service_request_id, _ ->
+          {:ok, %{id: UUID.uuid4()}}
+      end)
+
+      assert DecisionManager.check_access(%{
+               "resource" => %{
+                 "type" => "service_request",
+                 "action" => "read",
+                 "id" => UUID.uuid4()
+               },
+               "consumer" => %{
+                 "user_id" => UUID.uuid4(),
+                 "client_id" => client_id,
+                 "client_type" => "MIS"
+               },
+               "contexts" => [
+                 %{"type" => "patient", "id" => patient_id}
+               ]
+             })
+    end
+
+    test "success to access to service request in the same MSP" do
+      patient_id = UUID.uuid4()
+      client_id = UUID.uuid4()
+      employee_ids = [UUID.uuid4()]
+
+      stub(RpcWorkerMock, :run, fn
+        "ops", _, :declarations_by_employees, _ ->
+          []
+
+        "ehealth", _, :employees_by_user_id_client_id, _ ->
+          {:ok, employee_ids}
+
+        "medical_events_api", _, :episode_by_service_request_id, _ ->
+          nil
+
+        "medical_events_api", _, :service_request_by_id, _ ->
+          {:ok, %{requester_legal_entity: %{identifier: %{value: client_id}}}}
+      end)
+
+      assert DecisionManager.check_access(%{
+               "resource" => %{
+                 "type" => "service_request",
+                 "action" => "read",
+                 "id" => UUID.uuid4()
+               },
+               "consumer" => %{
+                 "user_id" => UUID.uuid4(),
+                 "client_id" => client_id,
+                 "client_type" => "MIS"
+               },
+               "contexts" => [
+                 %{"type" => "patient", "id" => patient_id}
+               ]
+             })
+    end
+
     test "success on episode, created on my MSP" do
       patient_id = UUID.uuid4()
       client_id = UUID.uuid4()

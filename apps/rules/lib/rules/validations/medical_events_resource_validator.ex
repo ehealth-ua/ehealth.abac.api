@@ -19,6 +19,20 @@ defmodule Rules.Validations.MedicalEventsResourceValidator do
     end
   end
 
+  def same_msp_resource?(_, client_id, nil, "service_request", %{"requester_legal_entity" => requester_legal_entity}) do
+    requester_legal_entity == client_id
+  end
+
+  def same_msp_resource?(patient_id, client_id, resource_id, "service_request", _) do
+    with {:ok, service_request} <-
+           Cache.run("medical_events_api", Api.Rpc, :service_request_by_id, [
+             patient_id,
+             resource_id
+           ]) do
+      service_request.requester_legal_entity.identifier.value == client_id
+    end
+  end
+
   def same_msp_resource?(_, _, _, _, _), do: false
 
   def same_msp_context?(patient_id, client_id, "episode", contexts) do
