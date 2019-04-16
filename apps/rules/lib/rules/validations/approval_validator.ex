@@ -82,6 +82,13 @@ defmodule Rules.Validations.ApprovalValidator do
     end
   end
 
+  def active_approval?(patient_id, user_id, client_id, resource_id, "diagnostic_report", contexts) do
+    with {:ok, episode_id} <- get_episode_id(contexts, patient_id, resource_id, :episode_by_diagnostic_report_id),
+         {:ok, approvals} <- get_approvals(patient_id, user_id, client_id, episode_id) do
+      !Enum.empty?(approvals)
+    end
+  end
+
   @doc """
   TODO: not implemented
   """

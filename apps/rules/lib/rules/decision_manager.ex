@@ -19,6 +19,7 @@ defmodule Rules.DecisionManager do
     device
     medication_statement
     service_request
+    diagnostic_report
   )
   @medical_events_context Rules.Contexts.MedicalEventsContext
 
