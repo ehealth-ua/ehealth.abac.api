@@ -33,6 +33,16 @@ defmodule Rules.Validations.MedicalEventsResourceValidator do
     end
   end
 
+  def same_msp_resource?(patient_id, client_id, resource_id, "diagnostic_report", _) do
+    with {:ok, diagnostic_report} <-
+           Cache.run("medical_events_api", Api.Rpc, :diagnostic_report_by_id, [
+             patient_id,
+             resource_id
+           ]) do
+      diagnostic_report.managing_organization.identifier.value == client_id
+    end
+  end
+
   def same_msp_resource?(_, _, _, _, _), do: false
 
   def same_msp_context?(patient_id, client_id, "episode", contexts) do

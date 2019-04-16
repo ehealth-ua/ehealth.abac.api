@@ -5,6 +5,7 @@ defmodule Rules.Contexts.MedicalEventsContext do
   alias Rules.DecisionManager
   alias Rules.Validations.ApprovalValidator
   alias Rules.Validations.DeclarationValidator
+  alias Rules.Validations.DiagnosticReportValidator
   alias Rules.Validations.MedicalEventsResourceValidator
   import Rules.Context
 
@@ -45,14 +46,14 @@ defmodule Rules.Contexts.MedicalEventsContext do
      ])}
   end)
 
-  given_(~r/^(?<resource>(\w+)) has been created on my MSP$/u, fn
-    state, %{resource: resource_type} ->
+  given_(~r/Entity has been created on my MSP$/u, fn
+    state, _ ->
       {:ok,
        add_validation(state, &MedicalEventsResourceValidator.same_msp_resource?/5, [
          state.patient_id,
          state.client_id,
          state.resource_id,
-         String.downcase(resource_type),
+         String.downcase(state.resource_type),
          state.contexts
        ])}
   end)
@@ -65,6 +66,16 @@ defmodule Rules.Contexts.MedicalEventsContext do
          state.client_id,
          String.downcase(context_resource_type),
          state.contexts
+       ])}
+  end)
+
+  given_(~r/^Diagnostic report has been originated by mine episode$/u, fn
+    state, _ ->
+      {:ok,
+       add_validation(state, &DiagnosticReportValidator.same_origin_episode?/3, [
+         state.patient_id,
+         state.client_id,
+         state.resource_id
        ])}
   end)
 
