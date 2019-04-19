@@ -74,7 +74,7 @@ defmodule Rules.DecisionManager do
 
   def has_access?(%{validations: validations}) do
     Enum.all?(validations, fn {fun, args} ->
-      apply(fun, args)
+      apply(fun, args) == true
     end)
   end
 
