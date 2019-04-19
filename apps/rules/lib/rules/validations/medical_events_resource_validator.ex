@@ -19,8 +19,14 @@ defmodule Rules.Validations.MedicalEventsResourceValidator do
     end
   end
 
-  def same_msp_resource?(_, client_id, nil, "service_request", %{"requester_legal_entity" => requester_legal_entity}) do
-    requester_legal_entity == client_id
+  def same_msp_resource?(_, client_id, nil, "service_request", contexts) do
+    case Enum.find(contexts, &(Map.get(&1, "type") == "requester_legal_entity")) do
+      nil ->
+        nil
+
+      %{"id" => requester_legal_entity} ->
+        requester_legal_entity == client_id
+    end
   end
 
   def same_msp_resource?(patient_id, client_id, resource_id, "service_request", _) do
