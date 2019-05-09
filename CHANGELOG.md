@@ -5,12 +5,18 @@ See [Conventional Commits](Https://conventionalcommits.org) for commit guideline
 
 <!-- changelog -->
 
-## [0.1.0](https://github.com/edenlabllc/ehealth.abac.api/compare/0.1.0...0.1.0) (2019-3-27)
+## [0.1.0](https://github.com/edenlabllc/ehealth.abac.api/compare/0.1.0...0.1.0) (2019-5-9)
 
 
 
 
 ### Features:
+
+* add rule 3 to service request (#44)
+
+* add diagnotic report rules (#40)
+
+* support service requests (#38)
 
 * rpc requests cache (#30)
 
@@ -25,6 +31,10 @@ See [Conventional Commits](Https://conventionalcommits.org) for commit guideline
 * add approval connectors (#14)
 
 ### Bug Fixes:
+
+* service request rule (#43)
+
+* decision manager (#42)
 
 * don't get episode from resource on approval rule (#23)
 
