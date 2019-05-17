@@ -3,17 +3,27 @@ defmodule Rules.Rpc.Cache do
   Cache for RPC requests
   """
 
+  alias Core.Redis
+  use Confex, otp_app: :rules
+
   @rpc_worker Application.get_env(:rules, :rpc_worker)
 
   def run(basename, module, function, args) do
-    case :ets.lookup(:cache, {basename, module, function, args}) do
-      [] ->
-        result = @rpc_worker.run(basename, module, function, args)
-        :ets.insert(:cache, {{basename, module, function, args}, result})
-        result
+    hash =
+      :md5
+      |> :crypto.hash(inspect(args))
+      |> Base.encode16()
 
-      [{_, value}] ->
-        value
+    key = "rpc:#{basename}:#{module}.#{function}:#{hash}"
+
+    case Redis.get(key) do
+      {:ok, result} ->
+        :erlang.binary_to_term(result)
+
+      _ ->
+        result = @rpc_worker.run(basename, module, function, args)
+        Redis.setex(key, config()[:cache_ttl], :erlang.term_to_binary(result))
+        result
     end
   end
 end
