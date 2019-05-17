@@ -27,9 +27,7 @@ defmodule Rules.DecisionManager do
 
   def check_access(%{"resource" => %{"type" => type, "action" => action}} = params)
       when type in @medical_events_resources do
-    :ets.new(:cache, [:named_table, :public, :set])
     scenarios = Parser.get_scenarios(:medical_events, action, type)
-
     patient = Enum.find(params["contexts"] || [], &(Map.get(&1, "type") == "patient")) || %{}
 
     setup = %Setup{

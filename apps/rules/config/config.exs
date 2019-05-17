@@ -56,4 +56,6 @@ config :kaffe,
 
 config :rules, :kafka, producer: Rules.Kafka.Producer
 
+config :rules, Rules.Rpc.Cache, cache_ttl: {:system, :integer, "RPC_CACHE_TTL", 60}
+
 import_config "#{Mix.env()}.exs"
