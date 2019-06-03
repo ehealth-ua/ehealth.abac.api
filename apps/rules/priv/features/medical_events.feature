@@ -3,7 +3,7 @@ Feature: Medical events
 
     Attribute based permissions for medical events
 
-    @rule_1 @read @episode @encounter @observation @condition @allergy_intolerance @immunization @service_request @diagnostic_report
+    @rule_1 @read @episode @encounter @observation @condition @allergy_intolerance @immunization @risk_assessment @device @medication_statement @service_request @diagnostic_report
     Scenario: Doctor with active declaration can read all patient data
         Given Active declaration with patient
         And declaration from the same MSP
