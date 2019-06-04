@@ -5,6 +5,15 @@ See [Conventional Commits](Https://conventionalcommits.org) for commit guideline
 
 <!-- changelog -->
 
+## [0.2.0](https://github.com/edenlabllc/ehealth.abac.api/compare/0.1.1...0.2.0) (2019-6-4)
+
+
+
+
+### Features:
+
+* add more entities to declaration rule (#50)
+
 ## [0.1.1](https://github.com/edenlabllc/ehealth.abac.api/compare/0.1.0...0.1.1) (2019-5-17)
 
 
