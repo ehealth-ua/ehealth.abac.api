@@ -127,7 +127,7 @@ defmodule Rules.Validations.ApprovalValidator do
 
   defp get_approvals(patient_id, user_id, client_id, episode_id) do
     with {:ok, employee_ids} <-
-           Cache.run("ehealth", Core.Rpc, :employees_by_user_id_client_id, [
+           Cache.run("ehealth", EHealth.Rpc, :employees_by_user_id_client_id, [
              user_id,
              client_id
            ]) do

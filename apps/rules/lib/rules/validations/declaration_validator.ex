@@ -17,7 +17,7 @@ defmodule Rules.Validations.DeclarationValidator do
 
   def same_msp_declaration?(client_id, user_id) do
     with {:ok, employee_ids} <-
-           Cache.run("ehealth", Core.Rpc, :employees_by_user_id_client_id, [
+           Cache.run("ehealth", EHealth.Rpc, :employees_by_user_id_client_id, [
              user_id,
              client_id
            ]),
