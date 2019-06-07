@@ -5,6 +5,15 @@ See [Conventional Commits](Https://conventionalcommits.org) for commit guideline
 
 <!-- changelog -->
 
+## [0.2.1](https://github.com/edenlabllc/ehealth.abac.api/compare/0.2.0...0.2.1) (2019-6-7)
+
+
+
+
+### Bug Fixes:
+
+* rpc ehealth (#53)
+
 ## [0.2.0](https://github.com/edenlabllc/ehealth.abac.api/compare/0.1.1...0.2.0) (2019-6-4)
 
 
