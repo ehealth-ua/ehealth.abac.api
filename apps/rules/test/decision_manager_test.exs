@@ -12,6 +12,40 @@ defmodule Rules.DecisionManagerTest do
     :ok
   end
 
+  describe "list episodes" do
+    test "no access @rule_2" do
+      client_id = UUID.uuid4()
+
+      refute DecisionManager.check_access(%{
+               "resource" => %{"type" => "episode", "action" => "read", "id" => nil},
+               "consumer" => %{
+                 "user_id" => UUID.uuid4(),
+                 "client_id" => client_id,
+                 "client_type" => "MIS"
+               },
+               "contexts" => [
+                 %{"type" => "managing_organization_id", "id" => UUID.uuid4()}
+               ]
+             })
+    end
+
+    test "success access @rule_2" do
+      client_id = UUID.uuid4()
+
+      assert DecisionManager.check_access(%{
+               "resource" => %{"type" => "episode", "action" => "read", "id" => nil},
+               "consumer" => %{
+                 "user_id" => UUID.uuid4(),
+                 "client_id" => client_id,
+                 "client_type" => "MIS"
+               },
+               "contexts" => [
+                 %{"type" => "managing_organization_id", "id" => client_id}
+               ]
+             })
+    end
+  end
+
   describe "read episode" do
     test "no access" do
       refute DecisionManager.check_access(%{

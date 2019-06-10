@@ -4,8 +4,12 @@ defmodule Rules.Validations.MedicalEventsResourceValidator do
   alias Rules.Rpc.Cache
 
   def same_msp_resource?(patient_id, client_id, nil, "episode", contexts) do
-    with {:ok, episode} <- get_episode(patient_id, contexts) do
-      episode.managing_organization.identifier.value == client_id
+    case Enum.find(contexts, &(Map.get(&1, "type") == "managing_organization_id")) do
+      nil ->
+        nil
+
+      %{"id" => managing_organization_id} ->
+        managing_organization_id == client_id
     end
   end
 

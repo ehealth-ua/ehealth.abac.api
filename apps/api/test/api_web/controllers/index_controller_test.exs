@@ -33,9 +33,9 @@ defmodule ApiWeb.IndexControllerTest do
       patient_id = UUID.uuid4()
       client_id = UUID.uuid4()
 
-      stub(RpcWorkerMock, :run, fn
+      expect(RpcWorkerMock, :run, 3, fn
         "casher", _, :get_person_data, _ -> {:ok, [patient_id]}
-        "ehealth", _, :employees_by_user_id_client_id, _ -> {:ok, []}
+        "ehealth", _, :employees_by_user_id_client_id, _ -> {:ok, [UUID.uuid4()]}
         "ops", _, :declarations_by_employees, _ -> [%{legal_entity_id: client_id}]
       end)
 
