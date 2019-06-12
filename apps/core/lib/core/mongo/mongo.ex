@@ -62,6 +62,10 @@ defmodule Core.Mongo do
     execute(:insert_one!, [coll, doc, opts])
   end
 
+  def update_one(coll, %{"_id" => _} = filter, update, opts \\ []) do
+    execute(:update_one, [coll, filter, update, opts])
+  end
+
   def prepare_doc(%DateTime{} = doc), do: doc
 
   def prepare_doc(%NaiveDateTime{} = doc) do

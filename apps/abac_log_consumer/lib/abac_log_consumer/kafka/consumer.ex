@@ -25,7 +25,12 @@ defmodule AbacLogConsumer.Kafka.Consumer do
         |> Mongo.convert_to_uuid(:contexts, ~w(id))
         |> Mongo.convert_to_uuid(:resource, ~w(id))
 
-      case Mongo.insert_one(Log.collection(), Mongo.prepare_doc(log)) do
+      case Mongo.update_one(
+             Log.collection(),
+             %{"_id" => log._id},
+             %{"$set" => log |> Mongo.prepare_doc() |> Map.delete(:_id)},
+             upsert: true
+           ) do
         {:ok, _} ->
           :ok
 
