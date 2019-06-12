@@ -35,8 +35,9 @@ defmodule AbacLogConsumer.MixProject do
     [
       {:confex_config_provider, "~> 0.1.0"},
       {:kaffe, "~> 1.11"},
-      {:kube_rpc, "~> 0.2.0"},
-      {:libcluster, "~> 3.0", git: "https://github.com/AlexKovalevych/libcluster.git", branch: "kube_namespaces"},
+      {:kube_rpc, "~> 0.3.0"},
+      {:libcluster, "~> 3.0",
+       git: "https://github.com/AlexKovalevych/libcluster.git", branch: "fix_kubernetes_strategy"},
       {:mox, "~> 0.4.0", only: :test},
       {:core, in_umbrella: true}
     ]

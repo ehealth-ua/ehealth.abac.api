@@ -32,9 +32,10 @@ defmodule Rules.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:kube_rpc, "~> 0.2.0"},
+      {:kube_rpc, "~> 0.3.0"},
       {:kaffe, "~> 1.11"},
-      {:libcluster, "~> 3.0", git: "https://github.com/AlexKovalevych/libcluster.git", branch: "kube_namespaces"},
+      {:libcluster, "~> 3.0",
+       git: "https://github.com/AlexKovalevych/libcluster.git", branch: "fix_kubernetes_strategy"},
       {:white_bread, "~> 4.5"},
       {:gherkin, "~> 1.6"},
       {:mox, "~> 0.4.0", only: :test},
